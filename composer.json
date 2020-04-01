@@ -2,24 +2,24 @@
   "name": "cino/laravel-chronos",
   "description": "Replaces Carbon in Laravel by CakePHP's Chronos library",
   "type": "library",
+  "license": "MIT",
   "keywords": [
     "laravel",
     "chronos",
     "carbon-replacement",
     "date"
   ],
-  "require": {
-    "php": "^7.2",
-    "laravel/framework": "6.* || 7.*",
-    "cakephp/chronos": "1.* || 2.*"
-  },
-  "license": "MIT",
   "authors": [
     {
       "name": "Ricardo Cino",
       "homepage": "https://github.com/cino"
     }
   ],
+  "require": {
+    "php": "^7.2",
+    "laravel/framework": "6.* || 7.*",
+    "cakephp/chronos": "1.* || 2.*"
+  },
   "autoload": {
     "psr-4": {
       "Cino\\LaravelChronos\\": "src/"
