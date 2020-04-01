@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Date;
 trait ChronosTimestamps
 {
     /**
+     * Return a timestamp as DateTime object with time set to 00:00:00.
+     *
+     * @param mixed $value
+     * @return \Cake\Chronos\Chronos
+     */
+    protected function asDate($value)
+    {
+        return $this->asDateTime($value)->startOfDay();
+    }
+
+    /**
      * Return a timestamp as DateTime object.
      *
      * @param mixed $value
