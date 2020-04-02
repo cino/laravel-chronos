@@ -84,7 +84,6 @@ class EloquentMorphToManyTest extends EloquentTestCase
     }
 }
 
-
 class EloquentMorphToManyPost extends Model
 {
     protected $fillable = ['id'];
@@ -136,4 +135,3 @@ class EloquentMorphToManyTaggablesUsing extends MorphPivot
 {
     protected $table = 'taggables_using';
 }
-
