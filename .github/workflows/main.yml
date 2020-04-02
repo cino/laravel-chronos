@@ -4,12 +4,6 @@ jobs:
   laravel:
     name: PHP ${{ matrix.php }} - ${{ matrix.stability }} (PHP ${{ matrix.php-versions }} on ${{ matrix.operating-system }})
     runs-on: ubuntu-latest
-    env:
-      DB_PASSWORD: password
-      BROADCAST_DRIVER: log
-      CACHE_DRIVER: redis
-      QUEUE_CONNECTION: redis
-      SESSION_DRIVER: redis
     strategy:
       fail-fast: false
       max-parallel: 15
