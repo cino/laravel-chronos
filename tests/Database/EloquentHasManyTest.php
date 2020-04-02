@@ -29,16 +29,8 @@ class EloquentHasManyTest extends EloquentTestCase
     protected function seedData(): void
     {
         EloquentHasManyUser::query()->create(['id' => 1]);
-
-        $phone = new EloquentHasManyPhone();
-        $phone->user_id = 1;
-        $phone->date = Chronos::now();
-        $phone->save();
-
-        $phone = new EloquentHasManyPhone();
-        $phone->user_id = 1;
-        $phone->date = Chronos::now();
-        $phone->save();
+        EloquentHasManyPhone::query()->create(['user_id' => 1, 'date' => Chronos::now()]);
+        EloquentHasManyPhone::query()->create(['user_id' => 2, 'date' => Chronos::now()]);
     }
 
     protected function tearDown(): void
@@ -77,6 +69,8 @@ class EloquentHasManyUser extends Model
 class EloquentHasManyPhone extends Model
 {
     protected $dates = ['date'];
+
+    protected $fillable = ['date', 'user_id'];
 
     protected $table = 'phones';
 }

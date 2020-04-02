@@ -28,9 +28,7 @@ class EloquentBelongsToOneTest extends EloquentTestCase
 
     protected function seedData(): void
     {
-        $user = new EloquentBelongsToUser();
-        $user->date = Chronos::now();
-        $user->save();
+        EloquentBelongsToUser::query()->create(['date' => Chronos::now()]);
         EloquentBelongsToPhone::query()->create(['user_id' => 1]);
     }
 
@@ -48,12 +46,17 @@ class EloquentBelongsToOneTest extends EloquentTestCase
         $user = $phone->first()->user;
 
         $this->assertInstanceOf(ChronosInterface::class, $user->created_at);
+        $this->assertInstanceOf(ChronosInterface::class, $user->date);
         $this->assertInstanceOf(ChronosInterface::class, $user->updated_at);
     }
 }
 
 class EloquentBelongsToUser extends Model
 {
+    protected $dates = ['date'];
+
+    protected $fillable = ['date', 'user_id'];
+
     protected $table = 'users';
 }
 

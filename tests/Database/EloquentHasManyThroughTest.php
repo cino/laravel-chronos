@@ -63,7 +63,6 @@ class EloquentHasManyThroughTest extends EloquentTestCase
     }
 }
 
-
 class EloquentHasManyTroughCountry extends Model
 {
     protected $fillable = ['id'];

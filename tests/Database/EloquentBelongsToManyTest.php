@@ -34,13 +34,9 @@ class EloquentBelongsToManyTest extends EloquentTestCase
     protected function seedData(): void
     {
         $user = EloquentBelongsToManyUser::query()->create(['id' => 1]);
-
-        for ($i = 1; $i <= 3; $i++) {
-            $role = new EloquentBelongsToManyRole();
-            $role->id = $i;
-            $role->date = Chronos::now();
-            $role->save();
-        }
+        EloquentBelongsToManyRole::query()->create(['date' => Chronos::now()]);
+        EloquentBelongsToManyRole::query()->create(['date' => Chronos::now()]);
+        EloquentBelongsToManyRole::query()->create(['date' => Chronos::now()]);
 
         $user->roles()->sync([3, 1, 2]);
         $user->save();

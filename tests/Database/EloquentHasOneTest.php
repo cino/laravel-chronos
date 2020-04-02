@@ -27,9 +27,7 @@ class EloquentHasOneTest extends EloquentTestCase
     protected function seedData(): void
     {
         EloquentHasOneUser::query()->create(['id' => 1]);
-        $phone = new EloquentHasOnePhone();
-        $phone->user_id = 1;
-        $phone->save();
+        EloquentHasOnePhone::query()->create(['user_id' => 1]);
     }
 
     protected function tearDown(): void
@@ -66,5 +64,9 @@ class EloquentHasOneUser extends Model
 
 class EloquentHasOnePhone extends Model
 {
+    protected $dates = ['date'];
+
+    protected $fillable = ['user_id'];
+
     protected $table = 'phones';
 }

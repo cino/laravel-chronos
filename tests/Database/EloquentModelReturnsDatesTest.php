@@ -21,10 +21,7 @@ class EloquentModelReturnsDatesTest extends EloquentTestCase
 
     protected function seedData(): void
     {
-        $article = new EloquentModelReturnsDatesArticle();
-        $article->date = Chronos::now();
-        $article->datetime = Chronos::now();
-        $article->save();
+        EloquentModelReturnsDatesArticle::query()->create(['date' => Chronos::now(), 'datetime' => Chronos::now()]);
     }
 
     protected function tearDown(): void
