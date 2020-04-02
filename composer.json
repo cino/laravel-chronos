@@ -25,6 +25,11 @@
       "Cino\\LaravelChronos\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Cino\\LaravelChronos\\Tests\\": "tests/"
+    }
+  },
   "config": {
     "sort-packages": true
   },
@@ -35,5 +40,9 @@
       ]
     }
   },
-  "minimum-stability": "stable"
+  "minimum-stability": "stable",
+  "require-dev": {
+    "mockery/mockery": "^1.3",
+    "phpunit/phpunit": "^9.0"
+  }
 }
