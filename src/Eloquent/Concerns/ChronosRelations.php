@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 
 trait ChronosRelations
 {
-
     /**
      * Define a many-to-many relationship.
      *
@@ -34,6 +33,55 @@ trait ChronosRelations
         return parent::belongsToMany(...func_get_args());
     }
 
+    /**
+     * Define a polymorphic many-to-many relationship.
+     *
+     * @param string $related
+     * @param string $name
+     * @param string|null $table
+     * @param string|null $foreignPivotKey
+     * @param string|null $relatedPivotKey
+     * @param string|null $parentKey
+     * @param string|null $relatedKey
+     * @param bool $inverse
+     * @return \Cino\LaravelChronos\Eloquent\Relations\MorphToMany
+     */
+    public function morphToMany(
+        $related,
+        $name,
+        $table = null,
+        $foreignPivotKey = null,
+        $relatedPivotKey = null,
+        $parentKey = null,
+        $relatedKey = null,
+        $inverse = false
+    ) {
+        return parent::morphToMany(...func_get_args());
+    }
+
+    /**
+     * Define a polymorphic, inverse many-to-many relationship.
+     *
+     * @param string $related
+     * @param string $name
+     * @param string|null $table
+     * @param string|null $foreignPivotKey
+     * @param string|null $relatedPivotKey
+     * @param string|null $parentKey
+     * @param string|null $relatedKey
+     * @return \Cino\LaravelChronos\Eloquent\Relations\MorphToMany
+     */
+    public function morphedByMany(
+        $related,
+        $name,
+        $table = null,
+        $foreignPivotKey = null,
+        $relatedPivotKey = null,
+        $parentKey = null,
+        $relatedKey = null
+    ) {
+        return parent::morphedByMany(...func_get_args());
+    }
 
     /**
      * Instantiate a new BelongsToMany relationship.
@@ -93,4 +141,5 @@ trait ChronosRelations
             $relatedKey,
             $relationName, $inverse);
     }
+
 }
