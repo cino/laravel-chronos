@@ -10,8 +10,8 @@ use Illuminate\Support\Collection;
 
 abstract class Model extends BaseModel
 {
-    use ChronosTimestamps;
     use ChronosRelations;
+    use ChronosTimestamps;
 
     /**
      * Create a new pivot model instance.
