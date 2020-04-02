@@ -5,7 +5,9 @@
   "license": "MIT",
   "keywords": [
     "laravel",
+    "lumen",
     "chronos",
+    "carbon",
     "carbon-replacement",
     "date"
   ],
@@ -17,7 +19,8 @@
   ],
   "require": {
     "php": "^7.2",
-    "laravel/framework": "6.* || 7.*",
+    "illuminate/database": "6.* || 7.*",
+    "illuminate/support": "6.* || 7.*",
     "cakephp/chronos": "1.* || 2.*"
   },
   "autoload": {
@@ -36,7 +39,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "\\Cino\\LaravelChronos\\Providers\\ChronosServiceProvider"
+        "\\Cino\\LaravelChronos\\ChronosServiceProvider"
       ]
     }
   },

@@ -1,10 +1,10 @@
 <?php
 
-namespace Cino\LaravelChronos\Providers;
+namespace Cino\LaravelChronos;
 
 use Cake\Chronos\Chronos;
-use Carbon\Laravel\ServiceProvider;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\ServiceProvider;
 
 class ChronosServiceProvider extends ServiceProvider
 {

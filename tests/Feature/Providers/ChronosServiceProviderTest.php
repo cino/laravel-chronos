@@ -4,7 +4,7 @@ namespace Cino\LaravelChronos\Tests\Feature\Eloquent;
 
 use ArrayAccess;
 use Cake\Chronos\ChronosInterface;
-use Cino\LaravelChronos\Providers\ChronosServiceProvider;
+use Cino\LaravelChronos\ChronosServiceProvider;
 use Illuminate\Contracts\Foundation\Application as ApplicationInterface;
 use Illuminate\Support\Facades\Date;
 use Mockery;
@@ -18,7 +18,7 @@ class ChronosServiceProviderTest extends TestCase
     protected $app;
 
     /**
-     * @var \Cino\LaravelChronos\Providers\ChronosServiceProvider
+     * @var \Cino\LaravelChronos\ChronosServiceProvider
      */
     protected $provider;
 
