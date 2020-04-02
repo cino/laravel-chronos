@@ -21,7 +21,7 @@ class EloquentModelReturnsDatesTest extends EloquentTestCase
 
     protected function seedData(): void
     {
-        $article = new Article();
+        $article = new EloquentModelReturnsDatesArticle();
         $article->date = Chronos::now();
         $article->datetime = Chronos::now();
         $article->save();
@@ -36,7 +36,7 @@ class EloquentModelReturnsDatesTest extends EloquentTestCase
     {
         $this->seedData();
 
-        $article = Article::query()->first();
+        $article = EloquentModelReturnsDatesArticle::query()->first();
 
         $this->assertInstanceOf(ChronosInterface::class, $article->created_at);
         $this->assertInstanceOf(ChronosInterface::class, $article->date);
@@ -45,9 +45,11 @@ class EloquentModelReturnsDatesTest extends EloquentTestCase
     }
 }
 
-class Article extends Model
+class EloquentModelReturnsDatesArticle extends Model
 {
     protected $dates = ['date', 'datetime'];
 
     protected $fillable = ['date', 'datetime'];
+
+    protected $table = 'articles';
 }

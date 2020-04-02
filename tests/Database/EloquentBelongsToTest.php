@@ -28,12 +28,11 @@ class EloquentBelongsToOneTest extends EloquentTestCase
 
     protected function seedData(): void
     {
-        $user = new EloquentBelongsToOneUser();
+        $user = new EloquentBelongsToUser();
         $user->date = Chronos::now();
         $user->save();
-        EloquentBelongsToOnePhone::query()->create(['user_id' => 1]);
+        EloquentBelongsToPhone::query()->create(['user_id' => 1]);
     }
-
 
     protected function tearDown(): void
     {
@@ -45,7 +44,7 @@ class EloquentBelongsToOneTest extends EloquentTestCase
     {
         $this->seedData();
 
-        $phone = EloquentBelongsToOnePhone::query()->first();
+        $phone = EloquentBelongsToPhone::query()->first();
         $user = $phone->first()->user;
 
         $this->assertInstanceOf(ChronosInterface::class, $user->created_at);
@@ -53,12 +52,12 @@ class EloquentBelongsToOneTest extends EloquentTestCase
     }
 }
 
-class EloquentBelongsToOneUser extends Model
+class EloquentBelongsToUser extends Model
 {
     protected $table = 'users';
 }
 
-class EloquentBelongsToOnePhone extends Model
+class EloquentBelongsToPhone extends Model
 {
     protected $fillable = ['user_id'];
 
@@ -68,6 +67,6 @@ class EloquentBelongsToOnePhone extends Model
 
     public function user(): BelongsTo
     {
-        return $this->BelongsTo(EloquentBelongsToOneUser::class, 'user_id', 'id');
+        return $this->BelongsTo(EloquentBelongsToUser::class, 'user_id', 'id');
     }
 }

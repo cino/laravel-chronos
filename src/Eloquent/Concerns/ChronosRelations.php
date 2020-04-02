@@ -9,6 +9,32 @@ use Illuminate\Database\Eloquent\Model;
 
 trait ChronosRelations
 {
+
+    /**
+     * Define a many-to-many relationship.
+     *
+     * @param string $related
+     * @param string|null $table
+     * @param string|null $foreignPivotKey
+     * @param string|null $relatedPivotKey
+     * @param string|null $parentKey
+     * @param string|null $relatedKey
+     * @param string|null $relation
+     * @return \Cino\LaravelChronos\Eloquent\Relations\BelongsToMany
+     */
+    public function belongsToMany(
+        $related,
+        $table = null,
+        $foreignPivotKey = null,
+        $relatedPivotKey = null,
+        $parentKey = null,
+        $relatedKey = null,
+        $relation = null
+    ) {
+        return parent::belongsToMany(...func_get_args());
+    }
+
+
     /**
      * Instantiate a new BelongsToMany relationship.
      *

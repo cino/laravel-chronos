@@ -2,12 +2,13 @@
 
 namespace Cino\LaravelChronos\Tests\Database;
 
+use Cake\Chronos\Chronos;
 use Cake\Chronos\ChronosInterface;
 use Cino\LaravelChronos\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Schema\Blueprint;
 
-class EloquentHasOneTest extends EloquentTestCase
+class EloquentHasManyTest extends EloquentTestCase
 {
     protected function createSchema(): void
     {
@@ -17,6 +18,7 @@ class EloquentHasOneTest extends EloquentTestCase
 
         $this->schema()->create('phones', function (Blueprint $table) {
             $table->increments('id');
+            $table->date('date');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
@@ -26,9 +28,16 @@ class EloquentHasOneTest extends EloquentTestCase
 
     protected function seedData(): void
     {
-        EloquentHasOneUser::query()->create(['id' => 1]);
-        $phone = new EloquentHasOnePhone();
+        EloquentHasManyUser::query()->create(['id' => 1]);
+
+        $phone = new EloquentHasManyPhone();
         $phone->user_id = 1;
+        $phone->date = Chronos::now();
+        $phone->save();
+
+        $phone = new EloquentHasManyPhone();
+        $phone->user_id = 1;
+        $phone->date = Chronos::now();
         $phone->save();
     }
 
@@ -42,15 +51,16 @@ class EloquentHasOneTest extends EloquentTestCase
     {
         $this->seedData();
 
-        $user = EloquentHasOneUser::query()->first();
-        $phone = $user->phone;
-
-        $this->assertInstanceOf(ChronosInterface::class, $phone->created_at);
-        $this->assertInstanceOf(ChronosInterface::class, $phone->updated_at);
+        $user = EloquentHasManyUser::query()->first();
+        foreach ($user->phones as $phone) {
+            $this->assertInstanceOf(ChronosInterface::class, $phone->created_at);
+            $this->assertInstanceOf(ChronosInterface::class, $phone->date);
+            $this->assertInstanceOf(ChronosInterface::class, $phone->updated_at);
+        }
     }
 }
 
-class EloquentHasOneUser extends Model
+class EloquentHasManyUser extends Model
 {
     protected $fillable = ['id'];
 
@@ -58,13 +68,15 @@ class EloquentHasOneUser extends Model
 
     public $timestamps = false;
 
-    public function phone(): HasOne
+    public function phones(): HasMany
     {
-        return $this->hasOne(EloquentHasOnePhone::class, 'user_id', 'id');
+        return $this->hasMany(EloquentHasManyPhone::class, 'user_id', 'id');
     }
 }
 
-class EloquentHasOnePhone extends Model
+class EloquentHasManyPhone extends Model
 {
+    protected $dates = ['date'];
+
     protected $table = 'phones';
 }
