@@ -5,7 +5,6 @@ namespace Cino\LaravelChronos\Eloquent\Concerns;
 use Cake\Chronos\Chronos;
 use Cake\Chronos\ChronosInterface;
 use DateTimeInterface;
-use Illuminate\Support\Facades\Date;
 
 trait ChronosTimestamps
 {
@@ -54,15 +53,6 @@ trait ChronosTimestamps
         // fields on the database.
         if ($this->isStandardDateFormat($value)) {
             return Chronos::createFromFormat('Y-m-d', $value)->startOfDay();
-        }
-
-        $format = $this->getDateFormat();
-
-        // Finally, we will just assume this date is in the format used by default on
-        // the database connection and use that format to create the Carbon object
-        // that is returned back out to the developers after we convert it here.
-        if (Date::hasFormat($value, $format)) {
-            return Chronos::createFromFormat($format, $value);
         }
 
         // If everything else try parsing.
