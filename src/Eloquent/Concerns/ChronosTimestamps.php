@@ -59,6 +59,9 @@ trait ChronosTimestamps
         return Chronos::parse($value);
     }
 
+    /**
+     * @return \Cake\Chronos\Chronos
+     */
     public function freshTimestamp()
     {
         return new Chronos;
