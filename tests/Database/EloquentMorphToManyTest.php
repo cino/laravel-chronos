@@ -5,6 +5,7 @@ namespace Cino\LaravelChronos\Tests\Database;
 use Cake\Chronos\Chronos;
 use Cake\Chronos\ChronosInterface;
 use Cino\LaravelChronos\Eloquent\Model;
+use Cino\LaravelChronos\Eloquent\Relations\MorphPivot;
 use Cino\LaravelChronos\Eloquent\Relations\MorphToMany;
 use Cino\LaravelChronos\Eloquent\Relations\Pivot;
 use Illuminate\Database\Schema\Blueprint;
@@ -30,6 +31,13 @@ class EloquentMorphToManyTest extends EloquentTestCase
             $table->string('taggable_type');
             $table->timestamps();
         });
+
+        $this->schema()->create('taggables_using', function (Blueprint $table) {
+            $table->unsignedBigInteger('tag_id');
+            $table->unsignedBigInteger('taggable_id');
+            $table->string('taggable_type');
+            $table->timestamps();
+        });
     }
 
     protected function seedData(): void
@@ -38,6 +46,7 @@ class EloquentMorphToManyTest extends EloquentTestCase
         $tag = EloquentMorphToManyTag::query()->create(['id' => 1, 'date' => Chronos::now()]);
 
         $tag->posts()->save($post);
+        $tag->postsUsing()->save($post);
     }
 
     protected function tearDown(): void
@@ -57,6 +66,11 @@ class EloquentMorphToManyTest extends EloquentTestCase
             $this->assertInstanceOf(ChronosInterface::class, $post->updated_at);
         }
 
+        foreach ($tag->postsUsing as $post) {
+            $this->assertInstanceOf(ChronosInterface::class, $post->created_at);
+            $this->assertInstanceOf(ChronosInterface::class, $post->updated_at);
+        }
+
         $post = EloquentMorphToManyPost::query()->first();
         foreach ($post->tags as $tag) {
             $this->assertInstanceOf(ChronosInterface::class, $tag->created_at);
@@ -65,6 +79,7 @@ class EloquentMorphToManyTest extends EloquentTestCase
         }
 
         $this->assertSame(Pivot::class, $tag->posts()->getPivotClass());
+        $this->assertSame(EloquentMorphToManyTaggablesUsing::class, $tag->postsUsing()->getPivotClass());
         $this->assertSame(Pivot::class, $post->tags()->getPivotClass());
     }
 }
@@ -105,4 +120,20 @@ class EloquentMorphToManyTag extends Model
             'tag_id'
         );
     }
+
+    public function postsUsing(): MorphToMany
+    {
+        return $this->morphedByMany(
+            EloquentMorphToManyPost::class,
+            'taggable',
+            null,
+            'tag_id'
+        )->using(EloquentMorphToManyTaggablesUsing::class);
+    }
 }
+
+class EloquentMorphToManyTaggablesUsing extends MorphPivot
+{
+    protected $table = 'taggables_using';
+}
+

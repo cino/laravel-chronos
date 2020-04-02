@@ -30,6 +30,14 @@ class EloquentBelongsToManyTest extends EloquentTestCase
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
+
+        $this->schema()->create('role_user_using', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('role_id');
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+        });
     }
 
     protected function seedData(): void
@@ -40,6 +48,7 @@ class EloquentBelongsToManyTest extends EloquentTestCase
         EloquentBelongsToManyRole::query()->create(['date' => Chronos::now()]);
 
         $user->roles()->sync([3, 1, 2]);
+        $user->rolesUsing()->sync([3, 1, 2]);
         $user->save();
     }
 
@@ -56,13 +65,23 @@ class EloquentBelongsToManyTest extends EloquentTestCase
 
         $user = EloquentBelongsToManyUser::query()->first();
 
+        // Trigger refresh to ensure relations are still working after.
+        $user = $user->refresh();
+
         foreach ($user->roles as $role) {
             $this->assertInstanceOf(ChronosInterface::class, $role->created_at);
             $this->assertInstanceOf(ChronosInterface::class, $role->date);
             $this->assertInstanceOf(ChronosInterface::class, $role->updated_at);
         }
 
+        foreach ($user->rolesUsing as $role) {
+            $this->assertInstanceOf(ChronosInterface::class, $role->created_at);
+            $this->assertInstanceOf(ChronosInterface::class, $role->date);
+            $this->assertInstanceOf(ChronosInterface::class, $role->updated_at);
+        }
+
         $this->assertSame(Pivot::class, $user->roles()->getPivotClass());
+        $this->assertSame(EloquentBelongsToManyRoleUsing::class, $user->rolesUsing()->getPivotClass());
     }
 }
 
@@ -78,6 +97,13 @@ class EloquentBelongsToManyUser extends Model
     {
         return $this->belongsToMany(EloquentBelongsToManyRole::class, 'role_user', 'role_id', 'user_id');
     }
+
+    public function rolesUsing(): BelongsToMany
+    {
+        return $this
+            ->belongsToMany(EloquentBelongsToManyRole::class, 'role_user', 'role_id', 'user_id')
+            ->using(EloquentBelongsToManyRoleUsing::class);
+    }
 }
 
 class EloquentBelongsToManyRole extends Model
@@ -87,4 +113,9 @@ class EloquentBelongsToManyRole extends Model
     protected $fillable = ['date', 'id', 'user_id'];
 
     protected $table = 'roles';
+}
+
+class EloquentBelongsToManyRoleUsing extends Pivot
+{
+    protected $table = 'role_user_using';
 }
