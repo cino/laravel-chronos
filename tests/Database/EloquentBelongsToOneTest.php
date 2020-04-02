@@ -1,6 +1,6 @@
 <?php
 
-namespace Cino\LaravelChronos\Tests\Feature\Eloquent;
+namespace Cino\LaravelChronos\Tests\Database;
 
 use Cake\Chronos\Chronos;
 use Cake\Chronos\ChronosInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Cino\LaravelChronos\Tests\Feature\Eloquent;
+namespace Cino\LaravelChronos\Tests\Database;
 
 use Cino\LaravelChronos\Eloquent\Model;
 use Illuminate\Database\Capsule\Manager as DB;

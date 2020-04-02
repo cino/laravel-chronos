@@ -1,6 +1,6 @@
 <?php
 
-namespace Cino\LaravelChronos\Tests\Feature\Eloquent;
+namespace Cino\LaravelChronos\Tests;
 
 use ArrayAccess;
 use Cake\Chronos\ChronosInterface;
