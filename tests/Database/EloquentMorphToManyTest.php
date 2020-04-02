@@ -58,7 +58,6 @@ class EloquentMorphToManyTest extends EloquentTestCase
         }
 
         $post = EloquentMorphToManyPost::query()->first();
-
         foreach ($post->tags as $tag) {
             $this->assertInstanceOf(ChronosInterface::class, $tag->created_at);
             $this->assertInstanceOf(ChronosInterface::class, $tag->date);
