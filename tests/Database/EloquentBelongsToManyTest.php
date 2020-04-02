@@ -6,6 +6,7 @@ use Cake\Chronos\Chronos;
 use Cake\Chronos\ChronosInterface;
 use Cino\LaravelChronos\Eloquent\Model;
 use Cino\LaravelChronos\Eloquent\Relations\BelongsToMany;
+use Cino\LaravelChronos\Eloquent\Relations\Pivot;
 use Illuminate\Database\Schema\Blueprint;
 
 class EloquentBelongsToManyTest extends EloquentTestCase
@@ -60,6 +61,8 @@ class EloquentBelongsToManyTest extends EloquentTestCase
             $this->assertInstanceOf(ChronosInterface::class, $role->date);
             $this->assertInstanceOf(ChronosInterface::class, $role->updated_at);
         }
+
+        $this->assertSame(Pivot::class, $user->roles()->getPivotClass());
     }
 }
 

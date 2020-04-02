@@ -6,6 +6,7 @@ use Cake\Chronos\Chronos;
 use Cake\Chronos\ChronosInterface;
 use Cino\LaravelChronos\Eloquent\Model;
 use Cino\LaravelChronos\Eloquent\Relations\MorphToMany;
+use Cino\LaravelChronos\Eloquent\Relations\Pivot;
 use Illuminate\Database\Schema\Blueprint;
 
 class EloquentMorphToManyTest extends EloquentTestCase
@@ -63,6 +64,9 @@ class EloquentMorphToManyTest extends EloquentTestCase
             $this->assertInstanceOf(ChronosInterface::class, $tag->date);
             $this->assertInstanceOf(ChronosInterface::class, $tag->updated_at);
         }
+
+        $this->assertSame(Pivot::class, $tag->posts()->getPivotClass());
+        $this->assertSame(Pivot::class, $post->tags()->getPivotClass());
     }
 }
 
