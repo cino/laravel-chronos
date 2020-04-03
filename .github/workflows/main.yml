@@ -29,4 +29,9 @@ jobs:
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
 
       - name: Run tests
-        run: vendor/bin/phpunit tests/
+        run: vendor/bin/phpunit tests/ --coverage-clover=coverage.clover --verbose
+
+      - name: Upload coverage to scrutinizer
+        run:
+          - wget https://scrutinizer-ci.com/ocular.phar
+          - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
