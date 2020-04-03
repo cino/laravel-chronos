@@ -6,6 +6,7 @@
   "keywords": [
     "laravel",
     "lumen",
+    "eloquent",
     "chronos",
     "carbon",
     "carbon-replacement",
@@ -17,6 +18,10 @@
       "homepage": "https://github.com/cino"
     }
   ],
+  "support": {
+    "issues": "https://github.com/cino/laravel-chronos/issues",
+    "source": "https://github.com/cino/laravel-chronos"
+  },
   "require": {
     "php": "^7.2",
     "illuminate/database": "6.* || 7.*",
