@@ -9,12 +9,12 @@ This package is for enabling the usage of Chronos in Laravel, this will not cove
 
 ## Installation
 
-The preferred method of installation is via [Composer][]. Run the following
+The preferred method of installation is via [Composer](). Run the following
 command to install the package and add it as a requirement to your project's
 `composer.json`:
 
 ```bash
-composer require ramsey/uuid
+composer require cino/laravel-chronos
 ```
 
 ## Usage
