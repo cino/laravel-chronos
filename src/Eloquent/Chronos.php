@@ -5,7 +5,7 @@ namespace Cino\LaravelChronos\Eloquent;
 use Cino\LaravelChronos\Eloquent\Concerns\ChronosRelations;
 use Cino\LaravelChronos\Eloquent\Concerns\ChronosTimestamps;
 use Cino\LaravelChronos\Eloquent\Relations\Pivot;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as BaseModel;
 use Illuminate\Support\Collection;
 
 /**
@@ -26,7 +26,7 @@ trait Chronos
      * @param string|null $using
      * @return \Cino\LaravelChronos\Eloquent\Relations\Pivot
      */
-    public function newPivot(Model $parent, array $attributes, $table, $exists, $using = null)
+    public function newPivot(BaseModel $parent, array $attributes, $table, $exists, $using = null)
     {
         return $using ? $using::fromRawAttributes($parent, $attributes, $table, $exists)
             : Pivot::fromAttributes($parent, $attributes, $table, $exists);
