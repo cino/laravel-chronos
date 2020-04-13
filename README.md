@@ -19,7 +19,21 @@ composer require cino/laravel-chronos
 
 ## Usage
 
-The only thing you need to do is change your models to extend the Model class from this package. When you do this all functions that interact with dates are overridden to return a Chronos object.
+There are now 2 options to add this behaviour to your models. Either of the options will override functions to return a Chronos object instead of a Carbon object, the first and preferred option is to use the Chronos trait from \Cino\LaravelChronos\Eloquent\Chronos like below: 
+
+### Trait
+```php
+use Cino\LaravelChronos\Eloquent\Chronos;
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    use Chronos;
+}
+```
+
+### Extending model
+The second option is to change your models to extend the Model class from \Cino\LaravelChronos\Eloquent\Model which actually also uses the trait from above.
 
 ```php
 
